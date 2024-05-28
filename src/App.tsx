@@ -62,13 +62,13 @@ function Next (props:{
 
 export default function App() {
   const day = new Date().getDay();
-  const firstPeriod = new Date().setHours(8 - 7, 30, 0, 0);
+  const firstPeriod = new Date().setHours(8 - 0, 30, 0, 0);
   const [time, setTime] = useState(new Date());
   const [period, setPeriod] = useState(0);
   const [ remaining, setRemaining ] = useState(0);
 
   useEffect(() => {
-    if (time.getHours() <= 8 - 7) {
+    if (time.getHours() <= 8 - 0) {
       if (time.getMinutes() <= 30) {
         setPeriod(0);
       } else {
