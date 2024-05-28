@@ -98,6 +98,11 @@ export default {
                         room: "134"
                     },
                     {
+                        subject: "Computer",
+                        teacher: "Setthawut",
+                        room: "134"
+                    },
+                    {
                         subject: "Lunch",
                         teacher: "-",
                         room: "-",
