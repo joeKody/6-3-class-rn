@@ -94,7 +94,7 @@ export default function App() {
     ) {
       setPeriod(-1);
     }
-    setRemaining(firstPeriod + 50 * 60 * 1000 * (period + 0) - time.valueOf());
+    setRemaining(firstPeriod + 50 * 60 * 1000 * (period + 0) - time.valueOf() - (7 * 60 * 60 * 1000);
     const interval = setInterval(() => {
       setTime(new Date());
     }, 1000);
