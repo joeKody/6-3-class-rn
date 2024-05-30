@@ -55,7 +55,7 @@ function Next (props:{
 }){
   return (
     <p className="mr-4">
-      Next: {schedule.schedule[props.day].period[props.period].subject}
+      Next: {schedule.schedule[props.day].period[props.period + 1].subject}
     </p>
   )
 }
