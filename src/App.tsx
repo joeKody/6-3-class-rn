@@ -53,11 +53,39 @@ function Next (props:{
   period: number,
   day: number,
 }){
-  return (
-    <p className="mr-4">
-      Next: {schedule.schedule[props.day].period[props.period + 1].subject}
-    </p>
-  )
+  let nextPeriod = schedule.schedule[props.day].period[props.period + 1];
+  if (nextPeriod === undefined) {
+    return (
+      <p>
+        Next: None
+      </p>
+    )
+  }
+
+  const twoNextPeriod = schedule.schedule[props.day].period[props.period + 2];
+  if (twoNextPeriod !== undefined) {
+    if (nextPeriod.subject === twoNextPeriod.subject) {
+      nextPeriod = twoNextPeriod;
+    }
+  }
+
+  if (nextPeriod.room === "321") {
+    return (
+      <p>
+        Next: {
+          nextPeriod.subject
+        }
+      </p>
+    )
+  } else {
+    return (
+      <Chip color="primary" variant="shadow">
+        Next: {
+          nextPeriod.subject
+        }
+      </Chip>
+    )
+  }
 }
 
 export default function App() {
@@ -108,7 +136,12 @@ export default function App() {
           <Card className="min-w-[310px] min-h-[220px]">
             <CardHeader>
               <div className="w-full flex flex-col lg:flex-row lg:justify-between items-center">
-                <p className="text-xl ">Current: <span className="font-bold">{period > 0 ? period : "None"}</span></p>
+                <p className="text-xl ">
+                  Current:{" "}
+                  <span className="font-bold">
+                    {period > 0 ? period : "None"}
+                  </span>
+                </p>
                 <p className="collapse lg:visible">
                   {time.toLocaleTimeString("th-TH", {
                     timeZone: "Asia/Bangkok",
@@ -120,17 +153,22 @@ export default function App() {
             <CardBody className="py-4">
               <PeriodElement period={period} day={day} />
             </CardBody>
-            <Divider />
-            { period > 0 && period < schedule.schedule[day]?.period.length &&
-              (
-              <CardFooter>
-                <div className="w-full flex flex-col lg:flex-row lg:justify-between items-center">
-                  <Next period={period} day={day} />
-                  <p><Chip variant="shadow" color="secondary">{EpochToDate(remaining).slice(0, 8)}</Chip> remaining</p>
-                </div>
-              </CardFooter>
-              )
-            }
+            {period > 0 && period < schedule.schedule[day]?.period.length && (
+              <>
+                <Divider />
+                <CardFooter>
+                  <div className="w-full flex flex-col lg:flex-row lg:justify-between items-center">
+                    <Next period={period} day={day} />
+                    <p className="ml-4">
+                      <Chip variant="shadow" color="secondary">
+                        {EpochToDate(remaining).slice(0, 8)}
+                      </Chip>{" "}
+                      remaining
+                    </p>
+                  </div>
+                </CardFooter>
+              </>
+            )}
           </Card>
         </main>
       </NextUIProvider>
